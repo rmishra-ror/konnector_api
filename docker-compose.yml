@@ -1,0 +1,32 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: myapp_development
+      MYSQL_USER: konnector_user
+      MYSQL_PASSWORD: password
+
+  web:
+    build: .
+    command: bundle exec rails s -b '0.0.0.0'
+    volumes:
+      - '.:/myapp'
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USER: konnector_user
+      DATABASE_PASSWORD: password
+      DATABASE_NAME: myapp_development
+      RAILS_ENV: production
+      RAILS_MASTER_KEY: 3889baa14d70c60bea3cbe83acdbfa3b
+
+volumes:
+  db_data:
+

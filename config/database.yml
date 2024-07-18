@@ -13,19 +13,23 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  socket: /tmp/mysql.sock
+#  username: root
+#  password:
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
+#  socket: /tmp/mysql.sock
 
 development:
   <<: *default
-  database: konnector_api_development
+  database:  <%= ENV['DATABASE_NAME'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
+  host: <%= ENV['DATABASE_HOST'] %>
   database: konnector_api_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
@@ -50,6 +54,6 @@ test:
 #
 production:
   <<: *default
-  database: konnector_api_production
-  username: konnector_api
-  password: <%= ENV["KONNECTOR_API_DATABASE_PASSWORD"] %>
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>

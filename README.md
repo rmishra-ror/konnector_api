@@ -23,7 +23,6 @@ You may need to change the credentials for Mysql according to your specific conf
 ###### Run Test case using
 * `rspec`
 
-
 #### Instruction to run app using Docker:
 
 Run Below CMDs:

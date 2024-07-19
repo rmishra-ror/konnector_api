@@ -15,14 +15,14 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 #  username: root
 #  password:
-  username: <%= ENV['DATABASE_USER'] %>
+  username: <%= ENV['DATABASE_USER'] || "root" %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: <%= ENV['DATABASE_HOST'] %>
+  host: <%= ENV['DATABASE_HOST'] || "localhost" %>
 #  socket: /tmp/mysql.sock
 
 development:
   <<: *default
-  database:  <%= ENV['DATABASE_NAME'] %>
+  database:  <%= ENV['DATABASE_NAME'] || "konnector_api_development" %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

@@ -90,6 +90,14 @@ RSpec.describe "Users API", type: :request do
         expect(json['error']).to match(/campaign_names parameter must be a comma-separated string/)
       end
     end
+
+    context 'when campaign_names parameter is bad a string' do
+      before { get '/users/filter', params: { campaign_names: '{ cam1: "cam1", cam2: "cam2" }' } }
+
+      it 'returns a validation error' do
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
   end
 end
 

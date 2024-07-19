@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :users, only: [:index, :create] do
+  resources :users, only: %i[index create] do
     collection do
       get 'filter'
     end

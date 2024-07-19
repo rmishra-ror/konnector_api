@@ -29,7 +29,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  host: <%= ENV['DATABASE_HOST'] %>
+  host: <%= ENV['DATABASE_HOST'] || "localhost" %>
+  username: <%= ENV['DATABASE_USER'] || "root"%>
   database: konnector_api_test
 
 # As with config/credentials.yml, you never want to store sensitive information,

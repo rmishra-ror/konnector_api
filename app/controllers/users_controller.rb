@@ -16,23 +16,21 @@ class UsersController < ApplicationController
   end
 
   def filter
-    begin
-      campaign_names = params[:campaign_names].split(',')
-      @users = User.where(
-        campaign_names.map { |name|
-          "JSON_CONTAINS(campaigns_list, '{\"campaign_name\": \"#{name}\"}', '$')"
-        }.join(' OR ')
-      )
-      render json: @users
-      rescue
-        render status: :bad_request
-      end
+    campaign_names = params[:campaign_names].split(',')
+    @users = User.where(
+      campaign_names.map do |name|
+        "JSON_CONTAINS(campaigns_list, '{\"campaign_name\": \"#{name}\"}', '$')"
+      end.join(' OR ')
+    )
+    render json: @users
+  rescue StandardError
+    render status: :bad_request
   end
 
   private
 
   def user_params
-    params.permit(:name, :email, campaigns_list: [:campaign_name, :campaign_id])
+    params.permit(:name, :email, campaigns_list: %i[campaign_name campaign_id])
   end
 
   def validate_campaign_names
@@ -43,4 +41,3 @@ class UsersController < ApplicationController
     end
   end
 end
-
